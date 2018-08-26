@@ -14,6 +14,8 @@ public class Solution {
      *   "()(())",
      *   "()()()"
      * ]
+     * time complexity: n! or 2^n
+     * catalan number
      * @param n
      * @return a result shows generated parenthesis
      */
@@ -27,8 +29,15 @@ public class Solution {
         return res;
     }
 
+    /**
+     * helper function
+     * @param res result used to modify
+     * @param left the number of left parenthesis left
+     * @param right the number of right parenthesis left
+     * @param s a temporary string used to store a single result
+     */
     public static void helper(List<String> res, int left, int right, String s) {
-        System.out.println("Left: " + left + " Right: " + right + " s: " + s);
+        //System.out.println("Left: " + left + " Right: " + right + " s: " + s);
         if (left > right) {
             return;
         }
