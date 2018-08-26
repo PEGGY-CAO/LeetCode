@@ -4,6 +4,7 @@ import java.util.HashMap;
 public class Solution {
 
     /**
+     * time complexity: O(n)
      * @throws IllegalArgumentException if we cannot find the two integers
      * @param nums An int array
      * @param target target sum
