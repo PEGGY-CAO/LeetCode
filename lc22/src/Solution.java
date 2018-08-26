@@ -2,6 +2,21 @@ import java.util.List;
 import java.util.ArrayList;
 
 public class Solution {
+    /**
+     *Given n pairs of parentheses, write a function to generate all combinations of well-formed parentheses.
+     *
+     * For example, given n = 3, a solution set is:
+     *
+     * [
+     *   "((()))",
+     *   "(()())",
+     *   "(())()",
+     *   "()(())",
+     *   "()()()"
+     * ]
+     * @param n
+     * @return a result shows generated parenthesis
+     */
     public static List<String> generateParenthesis(int n) {
         List<String> res = new ArrayList<>();
         //corner case
@@ -13,6 +28,7 @@ public class Solution {
     }
 
     public static void helper(List<String> res, int left, int right, String s) {
+        System.out.println("Left: " + left + " Right: " + right + " s: " + s);
         if (left > right) {
             return;
         }
@@ -33,6 +49,6 @@ public class Solution {
     public static void main(String[] args) {
         Solution test = new Solution();
         List<String> res = test.generateParenthesis(3);
-        
+
     }
 }
