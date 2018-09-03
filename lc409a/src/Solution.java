@@ -13,7 +13,7 @@ public class Solution {
         Set<Character> visited = new HashSet<>();
         for (int i = 0; i < len; i++) {
             char curr = s.charAt(i);
-            if (visited. contains(curr)) {
+            if (visited.contains(curr)) {
                 map.put(curr, map.get(curr) + 1);
             } else {
                 map.put(curr, 1);
@@ -38,5 +38,12 @@ public class Solution {
             result += map.get(ch);
         }
         return result;
+    }
+
+    public static void main(String[] args) {
+        String example = "aaBbCCCdde";
+        Solution sol = new Solution();
+        int res = sol.longestPalindrome(example);
+        System.out.println(res);
     }
 }
