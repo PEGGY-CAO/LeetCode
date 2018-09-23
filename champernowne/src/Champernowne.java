@@ -24,7 +24,6 @@ public class Champernowne {
         int result = 0;
         while (flag) {
             dummy -= 9 * (int) Math.pow(10, count - 1) * count;
-            System.out.println("what happened?" + dummy);
             if (dummy > 0) {
                 count++;
             } else {
