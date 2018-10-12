@@ -11,7 +11,7 @@ public class Solution {
      * https://github.com/mcustiel/PlayingCodility/blob/master/src/main/java/org/mcustiel/codility/Battleship.java
      */
     public String solution(int N, String S, String T) {
-        if (N < 1 || S.length() < 2) { return "0,0";}
+        if (N < 1 || S.length() < 2 || T.length() < 1) { return "0,0";}
         List<Ship> ships = parseShips(S, N * N);
         List<Point> hits = parseHits(T, N * N);
 
