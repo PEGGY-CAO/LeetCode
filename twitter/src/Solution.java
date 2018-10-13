@@ -47,7 +47,7 @@ public class Solution {
             //we need to know indexInList - 1 and indexInList + 1 if exist
             int former = indexInList - 1 >= 0 ? mappingList.get(indexInList - 1) : Integer.MAX_VALUE;
             int latter = indexInList + 1 < mappingList.size() ? mappingList.get(indexInList + 1) : Integer.MAX_VALUE;
-            int res = Math.abs(former - i) > (latter - i) ? latter : former;
+            int res = Math.abs(former - index) > (latter - index) ? latter : former;
             result.add(res);
 
 
