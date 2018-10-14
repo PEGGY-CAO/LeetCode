@@ -11,8 +11,7 @@ public class MissingWord {
         StringTokenizer st2 = new StringTokenizer(t, " ");
 
         List<String> res = new ArrayList<>();
-        int i = 0;
-        int j = 0;
+
         while (st2.hasMoreTokens()) {
 
             String strj = st2.nextToken();
