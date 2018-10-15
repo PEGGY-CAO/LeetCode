@@ -1,6 +1,7 @@
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
+import java.util.concurrent.*;
 
 public class PrimeSubtree {
     /*
@@ -28,7 +29,7 @@ public class PrimeSubtree {
                 chiList.add(indexChild);
                 map.put(indexParent, chiList);
             } else {
-                Set<Integer> childList = new HashSet<>();
+                Set<Integer> childList = Collections.newSetFromMap(new ConcurrentHashMap<>());
                 childList.add(indexChild);
                 map.put(indexParent, childList);
             }
@@ -38,88 +39,104 @@ public class PrimeSubtree {
                 map.put(indexChild, chiList);
             } else {
 
-                Set<Integer> cList = new HashSet<>();
+                Set<Integer> cList = Collections.newSetFromMap(new ConcurrentHashMap<>());
                 cList.add(indexParent);
                 map.put(indexChild, cList);
             }
         }
 
-        Iterator x = map.entrySet().iterator();
-        while (x.hasNext()) {
-            Map.Entry pair = (Map.Entry) x.next();
-            Set<Integer> nums = (Set<Integer>) pair.getValue();
-            System.out.println("pair.getKey()" + ": " + pair.getKey());
-            for (int num : nums) {
-                System.out.println(num);
-            }
-        }
+//        Iterator x = map.entrySet().iterator();
+//        while (x.hasNext()) {
+//            Map.Entry pair = (Map.Entry) x.next();
+//            Set<Integer> nums = (Set<Integer>) pair.getValue();
+//            System.out.println("pair.getKey()" + ": " + pair.getKey());
+//            for (int num : nums) {
+//                System.out.println(num);
+//            }
+//        }
 
         //construct the tree in level order BFS
         Queue<Integer> q = new LinkedList<>();
         q.add(1);
         Set<Integer> visited = new HashSet<>();
 
+//        Iterator<Integer> mapKeyIt = ((ConcurrentHashMap<Integer, Set<Integer>>) map).keySet().iterator();
+//        while (mapKeyIt.hasNext()) {
+//            int key = mapKeyIt.next();
+//            visited.add(key);
+//            Set<Integer> childvalues = map.get(key);
+//            //map.remove(key);
+//            for (int value : childvalues) {
+//                if (!visited.contains(value)) {
+//                    visited.add(value);
+//                } else {
+//                    childvalues.remove(value);
+//                }
+//            }
+//            map.put(key, childvalues);
+//        }
+
+        while (q.peek() != null) {
+            int head = q.poll();
+            visited.add(head);
+            Set<Integer> cList = map.get(head);
+
+
+            for (Iterator<Integer> ite = cList.iterator(); ite.hasNext();) {
+                int child = ite.next();
+                //if the child node hasn't been visited, we add the child to the queue and add it to the visited set
+                if (!visited.contains(child)) {
+                    visited.add(child);
+                    q.add(child);
+                } else {
+                    // if the child node has already been visited, which means it's actually a parent
+                    //so we remove it from the current child list and put the new mapping parent-childlist in the map
+                    cList.remove(child);
+                    map.put(head, cList);
+                }
+            }
+        }
+
+        System.out.println("After constructing tree: ");
         Iterator<Integer> mapKeyIt = ((ConcurrentHashMap<Integer, Set<Integer>>) map).keySet().iterator();
         while (mapKeyIt.hasNext()) {
             int key = mapKeyIt.next();
-            visited.add(key);
-            Set<Integer> childvalues = map.get(key);
-            map.remove(key);
-            for (int value : childvalues) {
-                if (!visited.contains(value)) {
-                    visited.add(value);
-                } else {
-                    childvalues.remove(value);
-                }
+            Set<Integer> nums = map.get(key);
+            System.out.println("pair.getKey()" + ": " + key);
+            for (int num : nums) {
+                System.out.println(num);
             }
-            map.put(key, childvalues);
         }
+        System.out.println("finish printing tree");
 
 
-
-
-//        while (q.peek() != null) {
-//            int head = q.poll();
-//            visited.add(head);
-//            Set<Integer> cList = map.get(head);
-//
-//
-//            for (Iterator<Integer> ite = cList.iterator(); ite.hasNext();) {
-//                int child = ite.next();
-//                //if the child node hasn't been visited, we add the child to the queue and add it to the visited set
-//                if (!visited.contains(child)) {
-//                    visited.add(child);
-//                    q.add(child);
-//                } else {
-//                    // if the child node has already been visited, which means it's actually a parent
-//                    //so we remove it from the current child list and put the new mapping parent-childlist in the map
-//                    cList.remove(child);
-//                    map.put(head, cList);
-//                }
-//            }
-//        }
         List<Integer> result = new ArrayList<>();
         for (int query : queries) {
-            int res = dfs(query, values, map, 0);
+            int res = dfs(query, values, map);
             result.add(res);
         }
         return result;
 
     }
 
-    private static int dfs(int node, List<Integer> values, ConcurrentMap<Integer, Set<Integer>> map, int res) {
+    private static int dfs(int node, List<Integer> values, ConcurrentMap<Integer, Set<Integer>> map) {
+        //System.out.println("res: " + res + " node: " + node);
+        int res = 0;
         if (isPrime(values.get(node - 1))) {
             res++;
         }
         Set<Integer> childList = map.get(node);
         //base case
         if (childList.size() == 0) {
+
             return res;
         }
         Iterator<Integer> ite = childList.iterator();
         while (ite.hasNext()) {
             int child = ite.next();
-            res += dfs(child, values, map, res);
+            System.out.println("child: " + child);
+            res += dfs(child, values, map);
+            System.out.println("    " + res);
         }
         return res;
 
