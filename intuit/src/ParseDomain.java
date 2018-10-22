@@ -47,7 +47,9 @@ public class ParseDomain {
         while (parse.hasMoreTokens()) {
             String t = parse.nextToken();
             temp.delete(0, t.length() + 1);
-            answer.add(temp.toString());
+            if (temp.length() != 0) {
+                answer.add(temp.toString());
+            }
         }
         return answer;
     }
