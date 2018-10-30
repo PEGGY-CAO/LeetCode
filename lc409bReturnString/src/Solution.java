@@ -39,27 +39,25 @@ public class Solution {
             }
         }
         Set<Character> charSet = map.keySet();
-        //Set<Integer> valueSet = map.valueSet();
         //modify tha map so that the second time we see an odd show time, decrement it to make it to be even
         int countOdd = 0;
-        for (Character charac : charSet) {
-            int val = map.get(charac);
-            if (val % 2 == 1) {
-                countOdd++;
-                if (countOdd > 1) {
-
-                    val--;
-                    map.put(charac, val);
-                }
-
-            }
-        }
+//        for (Character charac : charSet) {
+//            int val = map.get(charac);
+//            if (val % 2 == 1) {
+//                countOdd++;
+//                if (countOdd > 1) {
+//
+//                    val--;
+//                    map.put(charac, val);
+//                }
+//
+//            }
+//        }
 
         //construct the result string
         StringBuilder result = new StringBuilder();
         StringBuilder endpart = new StringBuilder();
         char oddintheM = 0;
-        //Set<Character> newkey = map.keySet();
         for (Character charac : charSet) {
             //get the show time for each character
             int valOfC = map.get(charac);
@@ -69,11 +67,14 @@ public class Solution {
                     result.append(charac);
                     endpart.insert(0, charac);
                     valOfC -=2;
-                    //map.put(charac,  valOfC);
                 }
             }
             if (valOfC % 2 == 1) {
-                oddintheM = charac;
+
+                if (countOdd < 1) {
+                    oddintheM = charac;
+                }
+                countOdd++;
             }
         }
         if (countOdd > 0) {
