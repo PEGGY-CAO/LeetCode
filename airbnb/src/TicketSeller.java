@@ -28,11 +28,8 @@ public class TicketSeller {
 
             int price = first.getKey();
             int count = first.getValue();
-            System.out.println("i: " + i);
-            System.out.println("price: " + price);
-            System.out.println("count: " + count);
             if (i - count > 0) {
-                profit += (price * count);
+                profit += ((long) price * (long) count);
                 i -= count;
                 price--;
                 if (pq.containsKey(price)) {

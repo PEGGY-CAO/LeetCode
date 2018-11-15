@@ -10,11 +10,14 @@ public class FinalDiscountedPrice {
     public static void finalPrice(List<Integer> prices) {
         // Write your code here
         int length = prices.size();
-        int total = 0;
+        long total = 0;
         //Iterator<Integer> ite = prices.iterator();
+        //int i = 0;
         List<Integer> originalPrice = new ArrayList<>();
         Stack<Integer> stack = new Stack<>();
+
         for (int i = length - 1; i >= 0; i--) {
+            //pop out those that are irrelevant to the current one
             while (!stack.empty() && stack.peek() > prices.get(i)) {
                 stack.pop();
             }
