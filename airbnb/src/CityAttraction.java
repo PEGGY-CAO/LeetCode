@@ -47,7 +47,7 @@ public class CityAttraction {
             if (s < e) {
                 r = new Road(s, e, time);
             } else {
-                int temp = e;
+                int temp = s;
                 s = e;
                 e = temp;
                 r = new Road(s, e, time);
@@ -62,7 +62,6 @@ public class CityAttraction {
                 lookup.put(s, newList);
             }
         }
-        System.out.println("mapsize: " + lookup.size());
 
         int currentBeauty = beauty.get(0);
         List<Integer> beautyList = new ArrayList<>();
@@ -76,6 +75,7 @@ public class CityAttraction {
         int maxBeauty = 0;
         for (int i = 0; i < numOfPossible; i++) {
             System.out.println("beautyList: " + beautyList.get(i));
+            System.out.println("    timeList: " + timeList.get(i));
             if (beautyList.get(i) > maxBeauty) {
                 maxBeauty = beautyList.get(i);
             }
@@ -93,10 +93,12 @@ public class CityAttraction {
 
         //base case: when the road hits end, and the total current time is <= max time
         if (!lookup.containsKey(currentSite)) {
+            System.out.println("current site: " + currentSite);
             if (currentTime <= ((max_t + 1) / 2)) {
                 currentBeauty += beauty.get(currentSite);
                 timeList.add(currentTime);
                 beautyList.add(currentBeauty);
+                currentBeauty -= beauty.get(currentSite);
             }
             return;
         } else {
@@ -104,10 +106,14 @@ public class CityAttraction {
             for (Road r : currentRoads) {
                 int newStart = r.end;
                 int currentT = r.time;
+                System.out.println("r.end: " + newStart);
+
                 currentTime += currentT;
                 currentBeauty += beauty.get(currentSite);
+                System.out.println("current time: " + currentTime);
                 dfs(currentBeauty, beauty, lookup, newStart, beautyList, max_t, currentTime, timeList);
-
+                currentTime -= currentT;
+                //currentBeauty -= beauty.get(newStart);
             }
 
             return;
@@ -116,15 +122,12 @@ public class CityAttraction {
 
 
     public static void main(String[] args) {
-
         CityAttraction result = new CityAttraction();
-
-
         int n = 4;
         int m = 3;
         int maxt = 49;
         int[] b = {0, 32, 10, 43};
-        List<Integer> beauty = new ArrayList();
+        List<Integer> beauty = new ArrayList<>();
         for (int i = 0; i < b.length; i++) {
             beauty.add(b[i]);
         }
@@ -134,14 +137,23 @@ public class CityAttraction {
         List<Integer> u = new ArrayList<>();
         List<Integer> v = new ArrayList<>();
         List<Integer> t = new ArrayList<>();
-        for (int i = 0; i < t.size(); i++) {
-            System.out.println("i in main" + i);
-            u.add(uarr[i]);
-            v.add(varr[i]);
-            t.add(tarr[i]);
+        for (int j = 0; j < uarr.length; j++) {
+            u.add(uarr[j]);
+            v.add(varr[j]);
+            t.add(tarr[j]);
         }
-
         int max = result.findBestPath(n, m, maxt, beauty, u, v, t);
         System.out.println(max);
+
+
+/**     test case two
+        n = 5
+        m = 6
+        max_t = 70
+        beauty = {30, 80, 100, 50, 50}
+        u = {4, 1, 0, 4, 2, 2}
+        v = {3, 4, 3, 0, 3, 0}
+        t = {20, 15, 40, 10, 100, 10}
+ **/
     }
 }
