@@ -9,21 +9,26 @@ def solution(A):
     A.sort()
     if A[length-1] <= 0:
         return 1
-
+    if A[0] > 1or A[length-1] < 1:
+        return 1
     # initial result
     result = 1
     index = binarySearch(A, length, 1)
+    print index
     if A[index] < 1:
         return result
     else:
         # when A[index] == 1
-        for i in range(index, length-2):
-            if A[i+1] - A[i] <= 1:
+        for i in range(index+1, length):
+            # print i, A[i]
+            if A[i] - A[i-1] <= 1:
                 continue
             else:
-                result = A[i] + 1
+                result = A[i-1] + 1
+                # print result
+                return result
 
-    return result
+    return A[length-1] + 1
 
 
 def binarySearch(arr, n, target):
@@ -51,6 +56,6 @@ def binarySearch(arr, n, target):
 
 
 # drive code
-A = [1, 4, 3, 10, 7]
+A = [-3, 4, 3, 10, 7, 2, 6, 5]
 
 print solution(A)
