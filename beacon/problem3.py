@@ -32,3 +32,7 @@ def binarySearch(arr, n):
             j = mid
 
     return mid
+
+
+arr = [-3, -2, -4, 0, -5, -1, -3, 4, 5, 8, 6]
+print(solution(arr))
