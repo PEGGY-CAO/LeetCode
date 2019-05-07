@@ -74,6 +74,22 @@ void mergeSort(int A[], int l, int r) {
 
 int binarySearch(int A[], int l, int r) {
     
+    int m = l + (r - l) / 2;
+    
+    int num = A[m];
+    //base case
+    if (num == 1)
+        return m;
+    
+    if (l < r) {
+        if (num < 1) {
+            return binarySearch(A, m+1, r);
+        } else {
+            return binarySearch(A, l, m);
+        }
+    }
+    return m;
+    
 }
 
 int solution(int A[], int N) {
@@ -84,7 +100,20 @@ int solution(int A[], int N) {
         return 1;
     //then do binary search looking for the first positive number's position
     int index = binarySearch(A, 0, N - 1);
-    return 1;
+    if (A[index] != 1) {
+        return 1;
+    }
+    
+    //right now A[index]==1
+    while(index + 1 < N) {
+        if (A[index + 1] - A[index] <= 1) {
+            index++;
+        } else {
+            return A[index] + 1;
+        }
+    }
+    
+    return A[N - 1] + 1;
 }
 
 
@@ -92,9 +121,9 @@ int solution(int A[], int N) {
 int main(int argc, const char * argv[]) {
     // insert code here...
     printf("Hello, World!\n");
-    int A[6] = {1,3,6,4,1,2};
-    
-    int res = solution(A, 6);
-    printf("%d", res);
+    int A[] = {1,3,6,4,1,2,3, 6, 6, 6,6};
+    int length = sizeof(A)/sizeof(int);
+    int res = solution(A, length);
+    printf("%d\n", res);
     return 0;
 }
