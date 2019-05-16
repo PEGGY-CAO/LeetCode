@@ -121,7 +121,7 @@ int solution(int A[], int N) {
 int main(int argc, const char * argv[]) {
     // insert code here...
     printf("Hello, World!\n");
-    int A[] = {1,3,6,4,1,2,3, 6, 6, 6,6};
+    int A[] = {8, 5,1,3,6,4,1,2,3, 6, 6, 6,6};
     int length = sizeof(A)/sizeof(int);
     int res = solution(A, length);
     printf("%d\n", res);

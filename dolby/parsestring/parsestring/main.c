@@ -5,6 +5,10 @@
 //  Created by Yuqi Cao on 5/7/19.
 //  Copyright © 2019 GT. All rights reserved.
 //
+/**
+ * In this problem, I'm asked to write a solution that a string pointer is passed in
+ * and we need to return an integer indicating how many "BALLOON" there are in the string.
+ */
 
 #include <stdio.h>
 
@@ -42,7 +46,7 @@ int solution(char *S) {
             case 14:
                 dict[4]++;
                 break;
-                
+            default:
                 break;
         }
         i++;
