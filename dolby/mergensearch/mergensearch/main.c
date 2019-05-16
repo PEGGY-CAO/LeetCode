@@ -30,7 +30,7 @@ void merge2arr(int A[], int l, int m, int r) {
     for (i = 0; i < ln; i++) {
         L[i] = A[l + i];
     }
-    for (j = 0; j < ln; j++) {
+    for (j = 0; j < rn; j++) {
         R[j] = A[m + 1 + j];
     }
     i = 0;
