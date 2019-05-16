@@ -26,7 +26,7 @@ int solution(char *S) {
     for (int j = 0; j < 5; j++) {
         dict[j] = 0;
     }
-    while(i < strlen(S)) {
+    while(S[i] != '\0') {
         char current = S[i];
 //        printf("%c\n", current);
         int temp = current - 'A';
@@ -53,8 +53,8 @@ int solution(char *S) {
         
     }
     
-    dict[2] = dict[2] / 2;
-    dict[4] = dict[4] / 2;
+    dict[2] /= 2 ;
+    dict[4] /= 2;
     
     int result = dict[0];
 
@@ -71,7 +71,7 @@ int solution(char *S) {
 
 int main(int argc, const char * argv[]) {
     // insert code here...    
-    char *ptr = "HEYTHEREBALLOONOOOONBALLLL";
+    char *ptr = "HEYTHEREBALLOONOOOONBALLLLFUCKMYLIFEBAN";
     int result = solution(ptr);
     printf("%d\n", result);
     return 0;
