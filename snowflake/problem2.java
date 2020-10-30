@@ -32,7 +32,7 @@ class Result {
         StringBuilder sb = new StringBuilder();
         System.out.println("m: " + m + " n: " + n + " key: " + key);
         while (m > 0 && n > 0) {
-            int combination = factorial(m + n - 1) / (factorial(n) * factorial(m - 1));
+            long combination = factorial(m + n - 1) / (factorial(n) * factorial(m - 1));
             System.out.println("combination: " + combination);
             if (key >= combination) {
                 System.out.println("V");
@@ -58,10 +58,10 @@ class Result {
         return sb.toString();
     }
  
-    private static int factorial(int n) 
+    private static long factorial(int n) 
     { 
         if (n == 0) 
-          return 1; 
+            return 1; 
           
         return n*factorial(n-1); 
     } 
