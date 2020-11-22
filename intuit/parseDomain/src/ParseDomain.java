@@ -14,45 +14,69 @@ public class ParseDomain {
     };
 
     public static Map<String, Integer> parseStrings (String[] input) {
-        int length = input.length;
+        // int length = input.length;
+        // Map<String, Integer> mapping = new HashMap<>();
+
+        // for (int i = 0; i < length; i++) {
+        //     String x = input[i];
+        //     String[] parseX = x.split(",");
+        //     int numOfHit = Integer.parseInt(parseX[0]);
+        //     //deal with parseX[1]
+        //     List<String> afterParse = parseDomain(parseX[1]);
+        //     for (String afP : afterParse) {
+        //         if (afP.length() != 0) {
+        //             if (mapping.containsKey(afP)) {
+        //                 mapping.put(afP, mapping.get(afP) + numOfHit);
+        //             } else {
+        //                 mapping.put(afP, numOfHit);
+        //             }
+        //         }
+        //     }
+
+        // }
+
+        // return mapping;
+
         Map<String, Integer> mapping = new HashMap<>();
-
-        for (int i = 0; i < length; i++) {
-            String x = input[i];
-            String[] parseX = x.split(",");
-            int numOfHit = Integer.parseInt(parseX[0]);
-            //deal with parseX[1]
-            List<String> afterParse = parseDomain(parseX[1]);
-            for (String afP : afterParse) {
-                if (afP.length() != 0) {
-                    if (mapping.containsKey(afP)) {
-                        mapping.put(afP, mapping.get(afP) + numOfHit);
-                    } else {
-                        mapping.put(afP, numOfHit);
-                    }
-                }
+        List<String> result = new ArrayList<>();
+        
+        for (int i = 0; i < cpdomains.length; i++) {
+            String[] afterParse = cpdomains[i].split("，");
+            int noOfVisit = Integer.parseInt(afterParse[0]);
+            String[] domainsNames = afterParse[1].split("\\.");
+            System.out.println(domainsNames.length);
+            String basic = "com";
+            mapping.put(basic, mapping.getOrDefault(basic, 0) + noOfVisit);
+            for (int j = domainsNames.length - 2; j >= 0; j--) {
+                basic = domainsNames[j] + "." + basic;
+                mapping.put(basic, mapping.getOrDefault(basic, 0) + noOfVisit);
             }
-
         }
-
-        return mapping;
+        
+        for (String domain : mapping.keySet()) {
+        	StringBuilder sb = new StringBuilder();
+            sb.append(mapping.get(domain)).append(' ').append(domain);
+            result.add(sb.toString());
+        }
+        return result;
+    
 
     }
 
-    private static List<String> parseDomain(String original) {
-        StringBuilder temp = new StringBuilder(original);
-        StringTokenizer parse = new StringTokenizer(original, ".");
-        List<String> answer = new ArrayList<>();
-        answer.add(original);
-        while (parse.hasMoreTokens()) {
-            String t = parse.nextToken();
-            temp.delete(0, t.length() + 1);
-            if (temp.length() != 0) {
-                answer.add(temp.toString());
-            }
-        }
-        return answer;
-    }
+    // private static List<String> parseDomain(String original) {
+    //     StringBuilder temp = new StringBuilder(original);
+    //     StringTokenizer parse = new StringTokenizer(original, ".");
+    //     List<String> answer = new ArrayList<>();
+    //     answer.add(original);
+    //     while (parse.hasMoreTokens()) {
+    //         String t = parse.nextToken();
+    //         temp.delete(0, t.length() + 1);
+    //         if (temp.length() != 0) {
+    //             answer.add(temp.toString());
+    //         }
+    //     }
+    //     return answer;
+    // }
 
 
     public static void main(String[] args) {
