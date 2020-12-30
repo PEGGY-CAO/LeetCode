@@ -1,5 +1,4 @@
 import java.util.Scanner;
-import java.io.*;
 
 public class MemoryLeak {
 
@@ -39,12 +38,11 @@ public class MemoryLeak {
             String[] memories = testCase.split(" ");
             memoryCases[i][0] = Long.parseLong(memories[0]);
             memoryCases[i][1] = Long.parseLong(memories[1]);
-            i++;
-            System.out.println();
         }
 
-//        for (int i = 0; i < numOfTestCases; i++) {
-//            printResult(memoryCases[i][0], memoryCases[i][1]);
-//        }
+
+        for (int i = 0; i < numOfTestCases; i++) {
+            printResult(memoryCases[i][0], memoryCases[i][1]);
+        }
     }
 }
