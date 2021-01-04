@@ -18,8 +18,6 @@ public class FormatStringArray {
         for (int row = 0; row < inputs.length; row++) {
             for (int col = 0; col < inputs[row].length; col++) {
                 String currentWord = inputs[row][col];
-//                System.out.println("current Word: " + currentWord);
-
                 //add first word in a new line
                 if (currentLine.length() == 0) {
                     currentLine.append(currentWord);
