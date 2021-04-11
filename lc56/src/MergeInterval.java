@@ -1,3 +1,4 @@
+import java.util.Arrays;
 import java.util.List;
 import java.util.ArrayList;
 
@@ -8,6 +9,8 @@ public class MergeInterval {
         if (intervals.length <= 1) {
             return intervals;
         }
+
+        Arrays.sort(intervals, (i1, i2) -> Integer.compare(i1[0], i2[0]));
 
         List<int[]> result = new ArrayList<>();
         int[] currentInterval = intervals[0];
