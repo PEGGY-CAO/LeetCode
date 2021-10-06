@@ -14,7 +14,7 @@ public class Solution {
             before = inputBefore;
             after = inputAfter;
         }
-    };
+    }
 
 // input: “num foo;”
 // {start: 0, before: “num”, after: “String”} output:"String foo;"
@@ -22,7 +22,7 @@ public class Solution {
 //Actual output:"String barpppppp;"
 
 
-    String replaceRanges(String text, List<Replacement> replacements) {
+    public static String replaceRanges(String text, List<Replacement> replacements) {
         //corner cases
         if (text == null || text.length() == 0) return "";
 
@@ -52,6 +52,7 @@ public class Solution {
 
             //if they're matching
             sb.append(replacements.get(i).after);
+            System.out.println("round i = " + i + " : " + sb.toString());
 
             lastEndIndex = endIndexSubString;
 
@@ -65,10 +66,11 @@ public class Solution {
     public static void main(String[] args) {
 
         Replacement r1 = new Replacement(0, "num", "String");
-        Replacement r2 = new Replacement(4, "foo", "bar");
+        Replacement r2 = new Replacement(4, "foo", "barpppppp");
         List<Replacement> listOfReplacements = new ArrayList<>();
         listOfReplacements.add(r1);
         listOfReplacements.add(r2);
         System.out.println(listOfReplacements.size());
+        System.out.println(replaceRanges("num foo", listOfReplacements));
     }
 }
