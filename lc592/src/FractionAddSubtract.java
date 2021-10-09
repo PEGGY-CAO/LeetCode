@@ -34,7 +34,7 @@ public class FractionAddSubtract {
         if (denominator == 0) {
             return numerator;
         } else {
-            return findgcd(numerator / denominator, numerator % denominator);
+            return findgcd(denominator, numerator % denominator);
         }
     }
 
