@@ -21,7 +21,8 @@ public class FractionAddSubtract {
             numerator *= nextDenominator;
             numerator += denominator * nextNumerator;
             denominator *= nextDenominator;
-            long g = numerator > denominator ? findgcd(numerator, denominator) :  findgcd(denominator, numerator);
+            long g = Math.abs(numerator) > Math.abs(denominator) ? findgcd(Math.abs(numerator), Math.abs(denominator))
+                    :  findgcd(Math.abs(denominator), Math.abs(numerator));
             numerator /= g;
             denominator /= g;
         }
