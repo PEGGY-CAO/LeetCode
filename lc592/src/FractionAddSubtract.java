@@ -21,7 +21,7 @@ public class FractionAddSubtract {
             numerator *= nextDenominator;
             numerator += denominator * nextNumerator;
             denominator *= nextDenominator;
-            long g = findgcd(numerator, denominator);
+            long g = numerator > denominator ? findgcd(numerator, denominator) :  findgcd(denominator, numerator);
             numerator /= g;
             denominator /= g;
         }
@@ -30,7 +30,12 @@ public class FractionAddSubtract {
     }
 
     private static long findgcd(long numerator, long denominator) {
-        return numerator != 0 ? findgcd(denominator % numerator, numerator) : Math.abs(denominator);
+        //euclidean algorithm
+        if (denominator == 0) {
+            return numerator;
+        } else {
+            return findgcd(numerator / denominator, numerator % denominator);
+        }
     }
 
     public static void main(String[] args) {
