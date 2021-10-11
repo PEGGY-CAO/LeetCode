@@ -1,17 +1,15 @@
 public class ReverseInteger {
 
     public static int reverseInteger(int input) {
-        boolean positive = true;
-        if (input < 0) positive = false;
-
         int result = 0;
-
         while (input != 0) {
-            result *= 10;
             int remainder = input % 10;
-            result += remainder;
+            int newResult = result * 10 + remainder;
+            if (newResult / 10 != result) {
+                return 0;
+            }
+            result = newResult;
             input /= 10;
-
         }
         return result;
     }
