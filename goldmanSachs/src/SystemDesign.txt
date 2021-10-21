@@ -1,10 +1,13 @@
 Oct 20th, 2021
 3 round final interview
-1st round: climbing stairs, difference between big O notation(upper bound) and Omega(lower bound).
-2nd round: decision tree's implementation. explain SVM. relational db or no sql
+1st round: climbing stairs, difference between big O notation(upper bound) and Omega(lower bound). Why Goldman Sachs?
+Javascript and superscript? What will you do if a data pipeline suddenly doesn't work?
+2nd round: decision tree's implementation. explain SVM. relational db or no sql.
+Design api. - Who are the users? How much time will it cost/need? How large will the return dataset be?
 3rd round: system design - design an iOS's reminder like app
 
 title
+context
 time stamp - created time
 time stamp - due time
 user
