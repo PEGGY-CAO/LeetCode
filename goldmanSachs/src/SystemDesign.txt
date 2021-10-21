@@ -1,0 +1,30 @@
+Oct 20th, 2021
+3 round final interview
+1st round: climbing stairs, difference between big O notation(upper bound) and Omega(lower bound).
+2nd round: decision tree's implementation. explain SVM. relational db or no sql
+3rd round: system design - design an iOS's reminder like app
+
+title
+time stamp - created time
+time stamp - due time
+user
+anyone involved
+
+- push notification
+- mutedOrNot
+
+front end: Mobile app
+API:
+- login authentication
+- retrieve existing entries
+- create and store
+- delete
+
+No - sql
+
+<String, List<String>>
+userId, List of entryIds
+
+Queue, pass in a comparator to sort the queue with due time
+
+use system clock API to compare with peek() the first element of the queue
