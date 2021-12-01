@@ -15,7 +15,7 @@ public class Solution {
             char c = input.charAt(i);
             // System.out.println(c);
             if  (Character.isDigit(c))  {
-                k = 10 * 0 +  c - '0';
+                k = 10 * k + c - '0';
             } else if (c == '[') {
                 strStack.push(cur);
                 //cur.setLength(0);
@@ -53,7 +53,7 @@ public class Solution {
 
     public static void main(String args[] ) throws Exception {
         /* Enter your code here. Read input from STDIN. Print output to STDOUT */
-        String test1 = "3[a]2[b]";
+        String test1 = "13[a]2[b]";
         String res = decode(test1);
         System.out.println(res);
     }
