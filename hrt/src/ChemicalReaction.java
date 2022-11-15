@@ -75,6 +75,8 @@ public class ChemicalReaction {
 
 			} else if (inputStr.charAt(i) == '+') {
 				currentMultiplier = 1;
+			} else if (Character.isLowerCase(inputStr.charAt(i))) {
+				return false;
 			}
 		}
 		if (leftAtoms.size() != rightAtoms.size()) return false;
@@ -95,7 +97,7 @@ public class ChemicalReaction {
 
 		ChemicalReaction test = new ChemicalReaction();
 
-		String[] s1 = {"2H2 + O2 = 2H2O", //expect true
+		String[] s1 = {"2H2 + hello = 2H2 + hello", //expect false
 			"1000H2O = Au + Ag", //false
 			"H2O + SO3 = H2SO4", //true
 			"3Fe + 2O2 = Fe3O4", //true
