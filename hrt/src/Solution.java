@@ -44,21 +44,19 @@ public class Solution {
 
         //dfs backtracking
         int count = 0;
-        dfs(words, charToInt, visited, nonZero, count, 0, 0, 0);
-
-        return count;
+        int r = dfs(words, charToInt, visited, nonZero, count, 0, 0, 0);
+        return r;
     }
 
-    private void dfs(String[] words, int[] charToInt, int[] visited, boolean[] nonZero, int result, int row, int col, int carrySum) {
+    private int dfs(String[] words, int[] charToInt, int[] visited, boolean[] nonZero, int result, int row, int col, int carrySum) {
         //if finally find a combination makes sense
         if (col == words[words.length - 1].length()) {
-            if (carrySum != 0) return;
+            if (carrySum != 0) return result;
             if (charToInt[words[words.length - 1].charAt(words[words.length - 1].length() - 1) - 'A'] == 0 && words[words.length - 1].length() > 1) {
-                // System.out.println("it's here");
-                return;
+                return result;
             }
             result++;
-            return;
+            return result;
         }
         //last row to result
         if (row == words.length - 1) {
@@ -70,20 +68,30 @@ public class Solution {
                     //digit hasn't been matched to character yet
                     visited[d] = 1;
                     charToInt[cFromResult - 'A'] = d;
-                    dfs(words, charToInt, visited, nonZero, result, 0, col + 1, carrySum / 10);
+                    result = dfs(words, charToInt, visited, nonZero, result, 0, col + 1, carrySum / 10);
                     visited[d] = 0;
                     charToInt[cFromResult - 'A'] = -1;
-                    return;
+                    return result;
                 }
+            } else {
+                //character has been assigned already
+                if (charToInt[cFromResult - 'A'] == d) {
+                    result = dfs(words, charToInt, visited, nonZero, result, 0, col + 1, carrySum / 10);
+                    return result;
+                } else {
+                    return result;
+                }
+
             }
+            return result;
         }
 
 
         //backtracking
         String currentWord = words[row];
         if (col >= currentWord.length()) {
-            if (charToInt[currentWord.charAt(currentWord.length() - 1) - 'A'] == 0 && currentWord.length() > 1) return;
-            dfs(words, charToInt, visited, nonZero, result, row + 1, col, carrySum);
+            if (charToInt[currentWord.charAt(currentWord.length() - 1) - 'A'] == 0 && currentWord.length() > 1) return result;
+            return dfs(words, charToInt, visited, nonZero, result, row + 1, col, carrySum);
         } else {
 
             char c = currentWord.charAt(col);
@@ -98,16 +106,16 @@ public class Solution {
                         //digit hasn't been matched to character yet
                         visited[digit] = 1;
                         charToInt[c - 'A'] = digit;
-                        dfs(words, charToInt, visited, nonZero, result, row + 1, col, carrySum + digit);
+                        result = dfs(words, charToInt, visited, nonZero, result, row + 1, col, carrySum + digit);
                         visited[digit] = 0;
                         charToInt[c - 'A'] = -1;
                     }
                 }
-                return;
+                return result;
             } else {
                 //c has already got a matching integer
                 int digit = charToInt[c - 'A'];
-                dfs(words, charToInt, visited, nonZero, result, row + 1, col, carrySum + digit);
+                return dfs(words, charToInt, visited, nonZero, result, row + 1, col, carrySum + digit);
             }
         }
 
@@ -120,6 +128,12 @@ public class Solution {
         testWords1[2] = "MONEY";
         Solution s1 = new Solution();
         int res1 = s1.solution(testWords1);
-        System.out.println(res1);
+        System.out.println(res1); //expect to be 1
+        String[] test2 = new String[3];
+        test2[0] = "GREEN";
+        test2[1] = "BLUE";
+        test2[2] = "BLACK";
+        int res2 = s1.solution(test2);
+        System.out.println(res2); //expect to be 12
     }
 }
