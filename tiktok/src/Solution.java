@@ -61,6 +61,9 @@ public class Solution {
                 String potentialB = input.substring(0, i) + 'B' + input.substring(i + 1);
 //                System.out.println(potentialB);
                 ans = dfs(potentialB, marks, ans, countMark, currentLevel + 1);
+                if (ans.size() == Math.pow(2, countMark)) {
+                    break;
+                }
                 marks[i] = 1;
             }
         }
