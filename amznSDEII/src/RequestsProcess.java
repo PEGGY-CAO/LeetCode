@@ -50,7 +50,8 @@ class RequestsProcess {
         int n = wait.size();
         //corner case
         if (n == 1) {
-            result.add(n);
+            result.add(1);
+            result.add(0);
             return result;
         }
 
@@ -127,6 +128,17 @@ class RequestsProcess {
         for (Integer i : result2) {
             System.out.println(i);
         }
-
+        System.out.println("Test 3");
+        List<Integer> wait3 = Arrays.asList(100);
+        List<Integer> result3 = findRequestsInQueue(wait3);
+        for (Integer i : result3) {
+            System.out.println(i);
+        }
+        System.out.println("Test 4");
+        List<Integer> wait4 = Arrays.asList(100,1,1,1,1,100);
+        List<Integer> result4 = findRequestsInQueue(wait4);
+        for (Integer i : result4) {
+            System.out.println(i);
+        }
     }
 }
