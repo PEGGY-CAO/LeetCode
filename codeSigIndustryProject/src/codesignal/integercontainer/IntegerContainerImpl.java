@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.*;
 
-class IntegerContainerImpl implements IntegerContainer {
+public class IntegerContainerImpl implements IntegerContainer {
     Queue<Integer> arr;
     public IntegerContainerImpl() {
         arr = new PriorityQueue<>();
