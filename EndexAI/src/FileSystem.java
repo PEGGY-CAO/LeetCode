@@ -134,54 +134,77 @@ public class FileSystem {
         void echo(String text, String path, boolean append);
     }
 
-    class Node {
-        String directory;
+    abstract class Node {
+        String name;
         Node parent;
-        List<String> files;
-        List<Node> subDirs;
-        public Node(String dir, Node parent) {
-            this.directory = dir;
-            this.parent = parent;
-            files = new ArrayList<>();
-            subDirs = new ArrayList<>();
+
+        public Node(String name) {
+            this.name = name;
+        }
+        abstract boolean isFile();
+    }
+
+    class File extends Node {
+
+        public File(String name) {
+            super(name);
+
+        }
+        @Override
+        public boolean isFile() {
+            return true;
+        }
+    }
+
+    class Directory extends Node {
+        Map<String, Node> subDirs;
+        public Directory(String name) {
+            super(name);
+            subDirs = new TreeMap<>();
+        }
+
+        @Override
+        public boolean isFile() {
+            return false;
         }
     }
 
     class MyFileSyetem implements FS {
-        Node root;
-        Node current;
+        Directory root;
+        Directory current;
 
         public MyFileSyetem() {
-            root = new Node("/", null);
+            root = new Directory("/");
         }
 
         @Override
         public void pwd() {
             StringBuilder sb = new StringBuilder();
             Node curP = current;
-            while(!curP.directory.equals(root.directory)) {
+            while(!curP.equals(root)) {
                 sb.insert(0, '/');
 
-                sb.insert(1, curP.directory);
+                sb.insert(1, curP.name);
                 curP = curP.parent;
 
             }
-            System.out.println(sb.toString());
+            System.out.println(sb);
         }
 
         @Override
         public void ls() {
-            if (current.files.size() != 0) {
-                for (String file : current.files) {
-                    System.out.println(file);
+            StringBuilder dirs = new StringBuilder();
+            StringBuilder files = new StringBuilder();
+            for (Node n : current.subDirs.values()) {
+                if (n.isFile()) {
+                    files.append(n.name);
+                    files.append(" ");
+                } else {
+                    dirs.append(n.name);
+                    dirs.append("/ ");
                 }
             }
-
-            if (current.subDirs.size() != 0) {
-                for (Node dir : current.subDirs) {
-                    System.out.println(dir.directory);
-                }
-            }
+            System.out.println(dirs.append(files).);
         }
 
         @Override
