@@ -351,8 +351,44 @@ public class FileSystem {
         }
 
         @Override
-        void echo(String text, String path, boolean append) {
-
+        public void echo(String text, String path, boolean append) {
+            String[] pathSeg = path.split("/");
+            if (pathSeg.length == 0) {
+                current = root;
+                return;
+            }
+            int i = 0;
+            Node currP;
+            if (path.charAt(0) == '/') {
+                i = 1;
+                currP = root;
+            } else {
+                currP = current;
+            }
+            if (pathSeg.length > 1) {
+                for (; i < pathSeg.length - 1; i++) {
+                    String currentDir = pathSeg[i];
+                    Directory cuP = (Directory) currP;
+                    if (cuP.subDirs != null && cuP.subDirs.containsKey(currentDir)) {
+                        currP = cuP.subDirs.get(currentDir);
+                    } else {
+                        System.out.println("Error: Path doesn't exist");
+                        return;
+                    }
+                }
+            }
+            String fileName = pathSeg[pathSeg.length - 1];
+            Directory cuP = (Directory) currP;
+            if (cuP.subDirs.size() == 0 || !cuP.subDirs.containsKey(fileName)) {
+                System.out.println("Error: File doesn't exist");
+                return;
+            }
+            File f = (File)cuP.subDirs.get(fileName);
+            if (append) {
+                f.content.append(text);
+            } else {
+                f.content = new StringBuilder(text);
+            }
         }
 
     }
