@@ -145,10 +145,10 @@ public class FileSystem {
     }
 
     class File extends Node {
-
+        StringBuilder content;
         public File(String name) {
             super(name);
-
+            content = new StringBuilder();
         }
         @Override
         public boolean isFile() {
@@ -175,6 +175,8 @@ public class FileSystem {
 
         public MyFileSyetem() {
             root = new Directory("/");
+            root.parent = root;
+            current = root;
         }
 
         @Override
@@ -204,87 +206,148 @@ public class FileSystem {
                     dirs.append("/ ");
                 }
             }
-            System.out.println(dirs.append(files).);
+            System.out.println(dirs.append(files));
         }
 
         @Override
         public void cd(String path) {
-            List<Node> subDir = current.subDirs;
             String[] pathSeg = path.split("/");
-            Node currP = root;
-            boolean found = false;
-            for (int i = 0; i < pathSeg.length; i++) {
+            if (pathSeg.length == 0) {
+                current = root;
+                return;
+            }
+            int i = 0;
+            Node currP;
+            if (path.charAt(0) == '/') {
+                i = 1;
+                currP = root;
+            } else {
+                currP = current;
+            }
+
+            for (; i < pathSeg.length; i++) {
                 String currentDir = pathSeg[i];
                 if (currentDir.equals("..")) {
                     currP = currP.parent;
                 } else if (currentDir.equals(".")) {
                     continue;
                 } else {
-
-                    for (Node dir : subDir) {
-                        if (dir.directory.equals(path)) {
-                            if (i == pathSeg. length - 1) {
-                                found = true;
-
-                            }
-                            currP = dir;
-
-                        }
+                    Directory cuP = (Directory) currP;
+                    if (cuP.subDirs != null && cuP.subDirs.containsKey(currentDir)) {
+                        currP = cuP.subDirs.get(currentDir);
+                    } else {
+                        System.out.println("Error: Path doesn't exist");
+                        return;
                     }
                 }
             }
-            System.out.println("Path doesn't exist");
+            current = (Directory)currP;
         }
 
         @Override
         public void mkdir(String path) {
             String[] pathSeg = path.split("/");
-            Node curP = root;
-            for (int i = 0; i < pathSeg.length; i++) {
-                List<Node> subDirs = curP.subDirs;
-                boolean found = false;
-
-                for (Node dir : subDirs) {
-                    if (dir.directory.equals(pathSeg[i]) && i == pathSeg.length - 1) {
-                        System.out.println("Error: Path not found");
-                        return;
+            if (pathSeg.length == 0) {
+                current = root;
+                return;
+            }
+            int i = 0;
+            Node currP;
+            if (path.charAt(0) == '/') {
+                i = 1;
+                currP = root;
+            } else {
+                currP = current;
+            }
+            if (pathSeg.length > 1) {
+                for (; i < pathSeg.length - 1; i++) {
+                    String currentDir = pathSeg[i];
+                    Directory cuP = (Directory) currP;
+                    if (cuP.subDirs != null && cuP.subDirs.containsKey(currentDir)) {
+                        currP = cuP.subDirs.get(currentDir);
                     } else {
-                        curP = dir;
+                        System.out.println("Error: Path doesn't exist");
+                        return;
                     }
                 }
-                if (!found) {
-                    Node newDir = new Node(pathSeg[i], curP);
-                    curP.subDirs.add(newDir);
-                    curP = newDir;
-                }
             }
+            String name = pathSeg[pathSeg.length - 1];
+            Node target = new Directory(name);
+            target.parent = currP;
+            Directory cuP = (Directory) currP;
+            cuP.subDirs.put(name, target);
         }
 
         @Override
         public void touch(String path) {
             String[] pathSeg = path.split("/");
-            Node curP = root;
-            for (int i = 0; i < pathSeg.length; i++) {
-                List<Node> subDirs = curP.subDirs;
-                for (Node dir : subDirs) {
-                    if (dir.directory.equals(pathSeg[i]) && i == pathSeg.length - 2) {
-                        System.out.println("Error: Path not found");
-                        return;
+            if (pathSeg.length == 0) {
+                current = root;
+                return;
+            }
+            int i = 0;
+            Node currP;
+            if (path.charAt(0) == '/') {
+                i = 1;
+                currP = root;
+            } else {
+                currP = current;
+            }
+
+            if (pathSeg.length > 1) {
+                for (; i < pathSeg.length - 1; i++) {
+                    String currentDir = pathSeg[i];
+                    Directory cuP = (Directory) currP;
+                    if (cuP.subDirs != null && cuP.subDirs.containsKey(currentDir)) {
+                        currP = cuP.subDirs.get(currentDir);
                     } else {
-                        curP = dir;
-                    }
-                    if (i == pathSeg.length - 1) {
-                        String newFile = pathSeg[i];
-                        curP.files.add(newFile);
+                        System.out.println("Error: Parent directory not found");
+                        return;
                     }
                 }
-
             }
+            String fileName = pathSeg[pathSeg.length - 1];
+            Node target = new File(fileName);
+            target.parent = currP;
+            Directory cuP = (Directory) currP;
+            cuP.subDirs.put(fileName, target);
         }
 
         @Override
         public void cat(String path) {
-
+            String[] pathSeg = path.split("/");
+            if (pathSeg.length == 0) {
+                current = root;
+                return;
+            }
+            int i = 0;
+            Node currP;
+            if (path.charAt(0) == '/') {
+                i = 1;
+                currP = root;
+            } else {
+                currP = current;
+            }
+            if (pathSeg.length > 1) {
+                for (; i < pathSeg.length - 1; i++) {
+                    String currentDir = pathSeg[i];
+                    Directory cuP = (Directory) currP;
+                    if (cuP.subDirs != null && cuP.subDirs.containsKey(currentDir)) {
+                        currP = cuP.subDirs.get(currentDir);
+                    } else {
+                        System.out.println("Error: Path doesn't exist");
+                        return;
+                    }
+                }
+            }
+            String fileName = pathSeg[pathSeg.length - 1];
+            Directory cuP = (Directory) currP;
+            if (cuP.subDirs.size() == 0 || !cuP.subDirs.containsKey(fileName)) {
+                System.out.println("Error: File doesn't exist");
+                return;
+            }
+            File f = (File)cuP.subDirs.get(fileName);
+            System.out.println(f.content.toString());
         }
 
         @Override
