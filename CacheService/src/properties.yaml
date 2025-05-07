@@ -1,0 +1,4 @@
+dbUrl = "localhost://port8088";
+ttlDbUrl = "localhost://example";
+healthDbUrl = "localhost://example";
+MetricsUrl = "localhost://example";
