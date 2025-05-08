@@ -1,0 +1,11 @@
+-- practice window functions
+WITH ranked_employees AS (
+    SELECT
+    employee_id,
+    selling_amounts
+    ROW_NUMBER() OVER (PARTITION BY department ORDER BY selling_amounts DESC) AS rn
+    FROM employee
+)
+SELECT *
+FROM ranked_employees
+WHERE rn <= 2;
