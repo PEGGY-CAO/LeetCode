@@ -1,8 +1,10 @@
+import java.util.Arrays;
+
 public class FindDuplicate {
 
     public int findDup(int[] arr) {
         //sort it first
-
+        Arrays.sort(arr);
 
         //binary search
         int left = 0;
